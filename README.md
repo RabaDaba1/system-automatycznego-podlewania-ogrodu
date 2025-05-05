@@ -17,7 +17,7 @@ System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojekto
 - `IrrigationScheduleData` – dane harmonogramu podlewania.
 - `ZoneConfigData` – konfiguracja stref podlewania.
 
-### Threads (Wątki)
+### Wątki
 - `MoistureSensorMonitor` – wątek monitorujący odczyty czujników wilgotności gleby.
 - `WeatherDataCollector` – wątek zbierający dane pogodowe.
 - `IrrigationController` – wątek sterujący zaworami podlewającymi.
@@ -25,12 +25,12 @@ System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojekto
 - `CameraController` – wątek zarządzający kamerą i wykonujący zdjęcia stanu ogrodu.
 - `NotificationManager` – wątek wysyłający powiadomienia do użytkownika.
 
-### Process (Procesy)
+### Procesy
 - `SensorProcess` – proces zawierający wątki zbierające dane z czujników.
 - `ControlProcess` – proces zawierający logikę sterowania systemem.
 - `NotificationProcess` – proces obsługujący powiadomienia i alerty.
 
-### Devices (Urządzenia)
+### Urządzenia
 - `MoistureSensor` – czujniki wilgotności gleby.
 - `TemperatureSensor` – czujnik temperatury otoczenia.
 - `SolenoidValve` – elektrozawory sterujące dopływem wody do poszczególnych stref.
@@ -39,14 +39,14 @@ System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojekto
 - `Camera` – kamera monitorująca stan ogrodu.
 - `WiFiModule` – moduł komunikacji bezprzewodowej.
 
-### Bus (Magistrale)
+### Magistrale
 - `I2CBus` – magistrala komunikacyjna dla czujników.
 - `WiFiBus` – magistrala do komunikacji bezprzewodowej.
 
-### Processor (Procesory)
+### Procesory
 - `MainController` – główny procesor sterujący pracą całego systemu.
 
-### Memory (Pamięć)
+### Pamięć
 - `SystemMemory` – pamięć operacyjna dla systemu.
 
 ### System
