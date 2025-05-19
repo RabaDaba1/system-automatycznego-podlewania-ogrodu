@@ -1,0 +1,29 @@
+package Hardware
+public
+  with Buses;
+  
+  processor MainController
+  features
+    I2C_Bus : requires bus access Buses::I2CBus;
+    WiFi_Bus : requires bus access Buses::WiFiBus;
+  properties
+    Scheduling_Protocol => (Round_Robin_Protocol);
+    Clock_Period => 1 ms;
+    Timing_Properties::Processor_Capacity => 1.0 MIPS;
+  end MainController;
+  
+  processor implementation MainController.impl
+  end MainController.impl;
+  
+  memory SystemMemory
+  features
+    I2C_Bus : requires bus access Buses::I2CBus;
+    WiFi_Bus : requires bus access Buses::WiFiBus;
+  end SystemMemory;
+  
+  memory implementation SystemMemory.impl
+  properties
+    Memory_Size => 256 MByte;
+  end SystemMemory.impl;
+  
+end Hardware;

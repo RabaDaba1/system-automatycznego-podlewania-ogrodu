@@ -1,0 +1,93 @@
+package Devices
+public
+  with DataTypes;
+  with Base_Types;
+  with Buses;
+  
+  device MoistureSensor
+  features
+    MoistureData : out data port DataTypes::SoilMoistureData;
+    I2C_Bus : requires bus access Buses::I2CBus;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 60000 ms; -- Read sensor every minute
+  end MoistureSensor;
+  
+  device implementation MoistureSensor.impl
+  end MoistureSensor.impl;
+  
+  device TemperatureSensor
+  features
+    TemperatureData : out data port DataTypes::TemperatureData;
+    I2C_Bus : requires bus access Buses::I2CBus;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 60000 ms; -- Read sensor every minute
+  end TemperatureSensor;
+  
+  device implementation TemperatureSensor.impl
+  end TemperatureSensor.impl;
+  
+  device SolenoidValve
+  features
+    ValveControl : in data port DataTypes::ValveControlData;
+    I2C_Bus : requires bus access Buses::I2CBus;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 1000 ms; -- Can be controlled at most once per second
+  end SolenoidValve;
+  
+  device implementation SolenoidValve.impl
+  end SolenoidValve.impl;
+  
+  device WaterPump
+  features
+    PumpControl : in data port Base_Types::Boolean;
+    I2C_Bus : requires bus access Buses::I2CBus;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 5000 ms; -- Can be controlled at most once per 5 seconds
+  end WaterPump;
+  
+  device implementation WaterPump.impl
+  end WaterPump.impl;
+  
+  device WaterLevelSensor
+  features
+    WaterLevelData : out data port DataTypes::WaterLevelData;
+    I2C_Bus : requires bus access Buses::I2CBus;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 300000 ms; -- Read sensor every 5 minutes
+  end WaterLevelSensor;
+  
+  device implementation WaterLevelSensor.impl
+  end WaterLevelSensor.impl;
+  
+  device Camera
+  features
+    TriggerImage : in data port Base_Types::Boolean;
+    ImageData : out data port DataTypes::CameraImageData;
+    WiFi_Bus : requires bus access Buses::WiFiBus;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 3600000 ms; -- Take photo at most once per hour
+  end Camera;
+  
+  device implementation Camera.impl
+  end Camera.impl;
+  
+  device WiFiModule
+  features
+    NotificationIn : in data port DataTypes::NotificationMessageData;
+    CommandOut : out data port DataTypes::CommandData.impl;
+    WiFi_Bus : requires bus access Buses::WiFiBus;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 1000 ms; -- Can communicate at most once per second
+  end WiFiModule;
+  
+  device implementation WiFiModule.impl
+  end WiFiModule.impl;
+  
+end Devices;

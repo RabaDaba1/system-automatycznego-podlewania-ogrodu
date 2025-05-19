@@ -1,0 +1,100 @@
+package Threads
+public
+  with Base_Types;
+  with DataTypes;
+  
+  thread MoistureSensorMonitor
+  features
+    MoistureData : in data port DataTypes::SoilMoistureData;
+    MoistureLevel : out data port DataTypes::SoilMoistureData;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 60000 ms; -- Check every minute
+    Deadline => 50000 ms;
+    Compute_Execution_Time => 10 ms .. 50 ms;
+  end MoistureSensorMonitor;
+  
+  thread implementation MoistureSensorMonitor.impl
+  end MoistureSensorMonitor.impl;
+  
+  thread WeatherDataCollector
+  features
+    TemperatureData : in data port DataTypes::TemperatureData;
+    RainPrediction : in data port DataTypes::RainPredictionData;
+    TemperatureOut : out data port DataTypes::TemperatureData;
+    RainPredictionOut : out data port DataTypes::RainPredictionData;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 3600000 ms; -- Check every hour
+    Deadline => 3000000 ms;
+    Compute_Execution_Time => 100 ms .. 500 ms;
+  end WeatherDataCollector;
+  
+  thread implementation WeatherDataCollector.impl
+  end WeatherDataCollector.impl;
+  
+  thread IrrigationController
+  features
+    MoistureLevel : in data port DataTypes::SoilMoistureData;
+    Temperature : in data port DataTypes::TemperatureData;
+    RainPrediction : in data port DataTypes::RainPredictionData;
+    IrrigationSchedule : in data port DataTypes::IrrigationScheduleData.impl;
+    ZoneConfig : in data port DataTypes::ZoneConfigData.impl;
+    WaterLevel : in data port DataTypes::WaterLevelData;
+    ValveControl : out data port DataTypes::ValveControlData;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 60000 ms; -- Check every minute
+    Deadline => 50000 ms;
+    Compute_Execution_Time => 50 ms .. 200 ms;
+  end IrrigationController;
+  
+  thread implementation IrrigationController.impl
+  end IrrigationController.impl;
+  
+  thread TankMonitor
+  features
+    WaterLevelData : in data port DataTypes::WaterLevelData;
+    WaterLevelOut : out data port DataTypes::WaterLevelData;
+    LowWaterAlert : out data port DataTypes::NotificationMessageData;
+  properties
+    Dispatch_Protocol => Periodic;
+    Period => 300000 ms; -- Check every 5 minutes
+    Deadline => 200000 ms;
+    Compute_Execution_Time => 10 ms .. 50 ms;
+  end TankMonitor;
+  
+  thread implementation TankMonitor.impl
+  end TankMonitor.impl;
+  
+  thread CameraController
+  features
+    TriggerImage : in data port Base_Types::Boolean;
+    ImageData : out data port DataTypes::CameraImageData;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 3600000 ms; -- Take images at most once per hour
+    Deadline => 1000000 ms;
+    Compute_Execution_Time => 500 ms .. 2000 ms;
+  end CameraController;
+  
+  thread implementation CameraController.impl
+  end CameraController.impl;
+  
+  thread NotificationManager
+  features
+    LowWaterAlert : in data port DataTypes::NotificationMessageData;
+    SensorAlert : in data port DataTypes::NotificationMessageData;
+    ValveAlert : in data port DataTypes::NotificationMessageData;
+    NotificationOut : out data port DataTypes::NotificationMessageData;
+  properties
+    Dispatch_Protocol => Sporadic;
+    Period => 60000 ms; -- Process notifications at most once a minute
+    Deadline => 30000 ms;
+    Compute_Execution_Time => 20 ms .. 100 ms;
+  end NotificationManager;
+  
+  thread implementation NotificationManager.impl
+  end NotificationManager.impl;
+  
+end Threads;

@@ -1,0 +1,91 @@
+package GardenIrrigationSystem
+public
+  with Processes;
+  with Devices;
+  with Buses;
+  with Hardware;
+  with DataTypes;
+  with Base_Types;
+  
+  system GardenIrrigation
+  end GardenIrrigation;
+  
+  system implementation GardenIrrigation.impl
+  subcomponents
+    SensorsProc : process Processes::SensorProcess.impl;
+    ControlProc : process Processes::ControlProcess.impl;
+    NotificationProc : process Processes::NotificationProcess.impl;
+    
+    MoistureSensor : device Devices::MoistureSensor.impl;
+    TempSensor : device Devices::TemperatureSensor.impl;
+    Valve : device Devices::SolenoidValve.impl;
+    Pump : device Devices::WaterPump.impl;
+    WaterLevelSensor : device Devices::WaterLevelSensor.impl;
+    Camera : device Devices::Camera.impl;
+    WiFi : device Devices::WiFiModule.impl;
+    
+    MainCPU : processor Hardware::MainController.impl;
+    Memory : memory Hardware::SystemMemory.impl;
+    
+    I2C : bus Buses::I2CBus.impl;
+    WiFiNetwork : bus Buses::WiFiBus.impl;
+    
+  connections
+    c1 : port MoistureSensor.MoistureData -> SensorsProc.MoistureDataIn;
+    c2 : port TempSensor.TemperatureData -> SensorsProc.TemperatureDataIn;
+    c3 : port WaterLevelSensor.WaterLevelData -> SensorsProc.WaterLevelDataIn;
+    
+    c4 : port SensorsProc.MoistureDataOut -> ControlProc.MoistureDataIn;
+    c5 : port SensorsProc.TemperatureDataOut -> ControlProc.TemperatureDataIn;
+    c6 : port SensorsProc.RainPredictionOut -> ControlProc.RainPredictionIn;
+    c7 : port SensorsProc.WaterLevelDataOut -> ControlProc.WaterLevelDataIn;
+    c8 : port SensorsProc.LowWaterAlert -> NotificationProc.LowWaterAlertIn;
+    
+    c9 : port ControlProc.ValveControlOut -> Valve.ValveControl;
+    c10 : port ControlProc.TriggerImageOut -> Camera.TriggerImage;
+    c11 : port Camera.ImageData -> NotificationProc.ImageDataIn;
+    c12 : port NotificationProc.NotificationOut -> WiFi.NotificationIn;
+    
+    b1 : bus access I2C -> MoistureSensor.I2C_Bus;
+    b2 : bus access I2C -> TempSensor.I2C_Bus;
+    b3 : bus access I2C -> WaterLevelSensor.I2C_Bus;
+    b4 : bus access I2C -> Valve.I2C_Bus;
+    b5 : bus access I2C -> Pump.I2C_Bus;
+    b6 : bus access I2C -> MainCPU.I2C_Bus;
+    b7 : bus access I2C -> Memory.I2C_Bus;
+    
+    b8 : bus access WiFiNetwork -> Camera.WiFi_Bus;
+    b9 : bus access WiFiNetwork -> WiFi.WiFi_Bus;
+    b10 : bus access WiFiNetwork -> MainCPU.WiFi_Bus;
+    b11 : bus access WiFiNetwork -> Memory.WiFi_Bus;
+    
+  properties
+    Actual_Processor_Binding => (reference(MainCPU)) applies to SensorsProc;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to ControlProc;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to NotificationProc;
+    
+    Actual_Processor_Binding => (reference(MainCPU)) applies to MoistureSensor;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to TempSensor;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to Valve;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to Pump;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to WaterLevelSensor;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to Camera;
+    Actual_Processor_Binding => (reference(MainCPU)) applies to WiFi;
+    
+    Actual_Memory_Binding => (reference(Memory)) applies to SensorsProc;
+    Actual_Memory_Binding => (reference(Memory)) applies to ControlProc;
+    Actual_Memory_Binding => (reference(Memory)) applies to NotificationProc;
+    Actual_Memory_Binding => (reference(Memory)) applies to MainCPU;
+    
+    Actual_Connection_Binding => (reference(I2C)) applies to c1;
+    Actual_Connection_Binding => (reference(I2C)) applies to c2;
+    Actual_Connection_Binding => (reference(I2C)) applies to c3;
+    Actual_Connection_Binding => (reference(I2C)) applies to c9;
+    
+    Actual_Connection_Binding => (reference(WiFiNetwork)) applies to c10;
+    Actual_Connection_Binding => (reference(WiFiNetwork)) applies to c11;
+    Actual_Connection_Binding => (reference(WiFiNetwork)) applies to c12;
+    
+  end GardenIrrigation.impl;
+  
+end GardenIrrigationSystem;

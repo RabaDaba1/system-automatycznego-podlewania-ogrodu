@@ -1,0 +1,72 @@
+package DataTypes
+public
+  with Base_Types;
+  with Data_Model;
+  
+  data SoilMoistureData
+  properties
+    Data_Model::Data_Representation => Integer;
+  end SoilMoistureData;
+  
+  data TemperatureData
+  properties
+    Data_Model::Data_Representation => Float;
+  end TemperatureData;
+  
+  data RainPredictionData
+  properties
+    Data_Model::Data_Representation => Float;
+  end RainPredictionData;
+  
+  data WaterLevelData
+  properties
+    Data_Model::Data_Representation => Integer;
+  end WaterLevelData;
+  
+  data CommandData
+  end CommandData;
+  
+  data implementation CommandData.impl
+  subcomponents
+    Command : data Base_Types::String;
+    Parameters : data Base_Types::String;
+  end CommandData.impl;
+  
+  data IrrigationScheduleData
+  end IrrigationScheduleData;
+  
+  data implementation IrrigationScheduleData.impl
+  subcomponents
+    Zone : data Base_Types::Integer;
+    StartTime : data Base_Types::Integer;
+    Duration : data Base_Types::Integer;
+    Days : data Base_Types::String;
+  end IrrigationScheduleData.impl;
+  
+  data ZoneConfigData
+  end ZoneConfigData;
+  
+  data implementation ZoneConfigData.impl
+  subcomponents
+    ZoneId : data Base_Types::Integer;
+    Name : data Base_Types::String;
+    PlantType : data Base_Types::String;
+    WaterNeeds : data Base_Types::Integer;
+  end ZoneConfigData.impl;
+  
+  data ValveControlData
+  properties
+    Data_Model::Data_Representation => Boolean;
+  end ValveControlData;
+  
+  data CameraImageData
+  properties
+    Data_Model::Data_Representation => String;
+  end CameraImageData;
+  
+  data NotificationMessageData
+  properties
+    Data_Model::Data_Representation => String;
+  end NotificationMessageData;
+  
+end DataTypes;

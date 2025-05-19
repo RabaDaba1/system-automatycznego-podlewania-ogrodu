@@ -1,0 +1,21 @@
+package Buses
+public
+  -- I2C bus for sensors communication
+  bus I2CBus
+  end I2CBus;
+  
+  bus implementation I2CBus.impl
+  properties
+    Transmission_Time => [Fixed => 10 ms .. 20 ms; PerByte => 1 us .. 2 us;];
+  end I2CBus.impl;
+  
+  -- WiFi bus for wireless communication
+  bus WiFiBus
+  end WiFiBus;
+  
+  bus implementation WiFiBus.impl
+  properties
+    Transmission_Time => [Fixed => 5 ms .. 10 ms; PerByte => 0.01 ms .. 0.05 ms;];
+  end WiFiBus.impl;
+  
+end Buses;

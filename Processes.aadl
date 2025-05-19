@@ -1,0 +1,86 @@
+package Processes
+public
+  with Threads;
+  with DataTypes;
+  with Base_Types;
+  
+  process SensorProcess
+  features
+    MoistureDataIn : in data port DataTypes::SoilMoistureData;
+    TemperatureDataIn : in data port DataTypes::TemperatureData;
+    RainPredictionIn : in data port DataTypes::RainPredictionData;
+    WaterLevelDataIn : in data port DataTypes::WaterLevelData;
+    MoistureDataOut : out data port DataTypes::SoilMoistureData;
+    TemperatureDataOut : out data port DataTypes::TemperatureData;
+    RainPredictionOut : out data port DataTypes::RainPredictionData;
+    WaterLevelDataOut : out data port DataTypes::WaterLevelData;
+    LowWaterAlert : out data port DataTypes::NotificationMessageData;
+  end SensorProcess;
+  
+  process implementation SensorProcess.impl
+  subcomponents
+    MoistureSensor : thread Threads::MoistureSensorMonitor.impl;
+    WeatherData : thread Threads::WeatherDataCollector.impl;
+    TankMonitor : thread Threads::TankMonitor.impl;
+  connections
+    c1 : port MoistureDataIn -> MoistureSensor.MoistureData;
+    c2 : port TemperatureDataIn -> WeatherData.TemperatureData;
+    c3 : port RainPredictionIn -> WeatherData.RainPrediction;
+    c4 : port WaterLevelDataIn -> TankMonitor.WaterLevelData;
+    c5 : port MoistureSensor.MoistureLevel -> MoistureDataOut;
+    c6 : port WeatherData.TemperatureOut -> TemperatureDataOut;
+    c7 : port WeatherData.RainPredictionOut -> RainPredictionOut;
+    c8 : port TankMonitor.WaterLevelOut -> WaterLevelDataOut;
+    c9 : port TankMonitor.LowWaterAlert -> LowWaterAlert;
+  end SensorProcess.impl;
+  
+  process ControlProcess
+  features
+    MoistureDataIn : in data port DataTypes::SoilMoistureData;
+    TemperatureDataIn : in data port DataTypes::TemperatureData;
+    RainPredictionIn : in data port DataTypes::RainPredictionData;
+    WaterLevelDataIn : in data port DataTypes::WaterLevelData;
+    IrrigationScheduleIn : in data port DataTypes::IrrigationScheduleData.impl;
+    ZoneConfigIn : in data port DataTypes::ZoneConfigData.impl;
+    ValveControlOut : out data port DataTypes::ValveControlData;
+    TriggerImageOut : out data port Base_Types::Boolean;
+  end ControlProcess;
+  
+  process implementation ControlProcess.impl
+  subcomponents
+    IrrigationCtrl : thread Threads::IrrigationController.impl;
+    Camera : thread Threads::CameraController.impl;
+  connections
+    c1 : port MoistureDataIn -> IrrigationCtrl.MoistureLevel;
+    c2 : port TemperatureDataIn -> IrrigationCtrl.Temperature;
+    c3 : port RainPredictionIn -> IrrigationCtrl.RainPrediction;
+    c4 : port WaterLevelDataIn -> IrrigationCtrl.WaterLevel;
+    c5 : port IrrigationScheduleIn -> IrrigationCtrl.IrrigationSchedule;
+    c6 : port ZoneConfigIn -> IrrigationCtrl.ZoneConfig;
+    c7 : port IrrigationCtrl.ValveControl -> ValveControlOut;
+    c8 : port TriggerImageOut -> Camera.TriggerImage;
+  end ControlProcess.impl;
+  
+  process NotificationProcess
+  features
+    LowWaterAlertIn : in data port DataTypes::NotificationMessageData;
+    SensorAlertIn : in data port DataTypes::NotificationMessageData;
+    ValveAlertIn : in data port DataTypes::NotificationMessageData;
+    ImageDataIn : in data port DataTypes::CameraImageData;
+    NotificationOut : out data port DataTypes::NotificationMessageData;
+    ImageDataOut : out data port DataTypes::CameraImageData;
+  end NotificationProcess;
+  
+  process implementation NotificationProcess.impl
+  subcomponents
+    NotifyManager : thread Threads::NotificationManager.impl;
+    CameraCtrl : thread Threads::CameraController.impl;
+  connections
+    c1 : port LowWaterAlertIn -> NotifyManager.LowWaterAlert;
+    c2 : port SensorAlertIn -> NotifyManager.SensorAlert;
+    c3 : port ValveAlertIn -> NotifyManager.ValveAlert;
+    c4 : port NotifyManager.NotificationOut -> NotificationOut;
+    c5 : port CameraCtrl.ImageData -> ImageDataOut;
+  end NotificationProcess.impl;
+  
+end Processes;
