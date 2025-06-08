@@ -3,6 +3,12 @@
 
 System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojektowany w języku AADL. Celem modelu jest monitorowanie warunków glebowych i atmosferycznych oraz automatyczne zarządzanie nawadnianiem ogrodu. System inteligentnie dostosowuje harmonogram podlewania w oparciu o wilgotność gleby, prognozy pogody oraz predefiniowane ustawienia użytkownika.
 
+## Diagram architektury
+
+![Garden Irrigation System Architecture](architecture-diagram.png)
+
+*Diagram przedstawia architekturę systemu automatycznego podlewania ogrodu z podziałem na komponenty sprzętowe (czujniki, zawory, pompa), jednostki przetwarzania (procesor główny, pamięć), moduły komunikacyjne (I2C, WiFi) oraz procesy sterujące (zbieranie danych z czujników, kontrola podlewania, powiadomienia).*
+
 ## Komponenty systemu
 
 ### Pakiet
