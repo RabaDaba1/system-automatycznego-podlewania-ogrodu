@@ -113,3 +113,31 @@ thread ControlProc.Camera(0,001 MIPS) ==> processor MainCPU(1,00MIPS) Utilizatio
 thread NotificationProc.NotifyManager(0,002 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,2%
 thread NotificationProc.CameraCtrl(0,001 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,1%
 ```
+
+## Analiza Wiązania Komponentów (Binding Constraints)
+
+Analiza wiązania komponentów (Check Binding Constraints) została przeprowadzona w celu weryfikacji poprawności przypisania komponentów oprogramowania do zasobów sprzętowych.
+
+![Check Binding Constraints Results](check_binding_constraints.png)
+
+*Wynik analizy Check Binding Constraints. Nie znaleziono żadnych problemów.*
+
+## Analiza Spójności Połączeń (Connection Consistency)
+
+Analiza spójności połączeń została wykonana w celu zapewnienia, że wszystkie połączenia między komponentami systemu są poprawnie zdefiniowane i nie występują żadne niespójności. Wyniki analizy potwierdzają, że nie znaleziono żadnych błędów.
+
+### Szczegółowy raport
+
+```
+Port Connection Consistency Report
+```
+
+## Analiza Spójności ARINC429 (ARINC429 Consistency)
+
+Analiza spójności dla standardu ARINC429 została przeprowadzona, aby zweryfikować zgodność połączeń wykorzystujących ten protokół. Wyniki analizy wskazują na brak błędów i pełną spójność.
+
+### Szczegółowy raport
+
+```
+ARINC429 Connection Consistency Report
+```
