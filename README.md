@@ -9,7 +9,7 @@ System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojekto
 
 ## Diagram architektury
 
-![Garden Irrigation System Architecture](architecture-diagram.png)
+![Garden Irrigation System Architecture](diagram.png)
 
 *Diagram przedstawia architekturę systemu automatycznego podlewania ogrodu z podziałem na komponenty sprzętowe (czujniki, zawory, pompa), jednostki przetwarzania (procesor główny, pamięć), moduły komunikacyjne (I2C, WiFi) oraz procesy sterujące (zbieranie danych z czujników, kontrola podlewania, powiadomienia).*
 
