@@ -3,6 +3,7 @@ public
   with DataTypes;
   with Base_Types;
   with Buses;
+  with SEI;
   
   device MoistureSensor
   features
@@ -11,6 +12,7 @@ public
   properties
     Dispatch_Protocol => Periodic;
     Period => 60000 ms; -- Read sensor every minute
+    SEI::GrossWeight => 0.05 kg;
   end MoistureSensor;
   
   device implementation MoistureSensor.impl
@@ -23,6 +25,7 @@ public
   properties
     Dispatch_Protocol => Periodic;
     Period => 60000 ms; -- Read sensor every minute
+    SEI::GrossWeight => 0.05 kg;
   end TemperatureSensor;
   
   device implementation TemperatureSensor.impl
@@ -35,6 +38,7 @@ public
   properties
     Dispatch_Protocol => Sporadic;
     Period => 1000 ms; -- Can be controlled at most once per second
+    SEI::GrossWeight => 0.2 kg;
   end SolenoidValve;
   
   device implementation SolenoidValve.impl
@@ -47,6 +51,7 @@ public
   properties
     Dispatch_Protocol => Sporadic;
     Period => 5000 ms; -- Can be controlled at most once per 5 seconds
+    SEI::GrossWeight => 1.5 kg;
   end WaterPump;
   
   device implementation WaterPump.impl
@@ -59,6 +64,7 @@ public
   properties
     Dispatch_Protocol => Periodic;
     Period => 300000 ms; -- Read sensor every 5 minutes
+    SEI::GrossWeight => 0.1 kg;
   end WaterLevelSensor;
   
   device implementation WaterLevelSensor.impl
@@ -72,6 +78,7 @@ public
   properties
     Dispatch_Protocol => Sporadic;
     Period => 3600000 ms; -- Take photo at most once per hour
+    SEI::GrossWeight => 0.3 kg;
   end Camera;
   
   device implementation Camera.impl
@@ -85,6 +92,7 @@ public
   properties
     Dispatch_Protocol => Sporadic;
     Period => 1000 ms; -- Can communicate at most once per second
+    SEI::GrossWeight => 0.03 kg;
   end WiFiModule;
   
   device implementation WiFiModule.impl

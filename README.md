@@ -88,7 +88,7 @@ Analiza schedulingu została przeprowadzona w celu weryfikacji, czy system jest 
 
 ### Podsumowanie wyników
 
-Procesor `MainCPU` jest schedulowalny z wykorzystaniem na poziomie 0.4%. Wszystkie zdefiniowane wątki w systemie są schedulowalne, co oznacza, że ich maksymalne czasy odpowiedzi nie przekraczają zdefiniowanych deadline'ów.
+Procesor `MainCPU` jest szeregowany z wykorzystaniem na poziomie 0.4%. Wszystkie zdefiniowane wątki w systemie są szeregowane, co oznacza, że ich maksymalne czasy odpowiedzi nie przekraczają zdefiniowanych deadline'ów.
 
 ### Szczegółowy raport
 
@@ -145,4 +145,27 @@ Analiza spójności dla standardu ARINC429 została przeprowadzona, aby zweryfik
 
 ```
 ARINC429 Connection Consistency Report
+```
+
+## Analiza Wag
+
+Analiza wag została przeprowadzona w celu weryfikacji całkowitej masy systemu oraz mas poszczególnych komponentów.
+
+### Szczegółowy raport
+
+```
+Weight totals Report
+
+I2CBus: [L] Sum of weights / gross weight is 0,020 kg (no limit specified)
+WiFiBus: [L] Sum of weights / gross weight is 0,050 kg (no limit specified)
+MoistureSensor: [L] Sum of weights / gross weight is 0,050 kg (no limit specified)
+TempSensor: [L] Sum of weights / gross weight is 0,050 kg (no limit specified)
+Valve: [L] Sum of weights / gross weight is 0,200 kg (no limit specified)
+Pump: [L] Sum of weights / gross weight is 1,500 kg (no limit specified)
+WaterLevelSensor: [L] Sum of weights / gross weight is 0,100 kg (no limit specified)
+Camera: [L] Sum of weights / gross weight is 0,300 kg (no limit specified)
+WiFi: [L] Sum of weights / gross weight is 0,030 kg (no limit specified)
+Mem: [L] Sum of weights / gross weight is 0,050 kg (no limit specified)
+MainCPU: [L] Sum of weights / gross weight is 0,100 kg (no limit specified)
+GardenIrrigation_impl_Instance: [A] Sum of weights (2,450 kg) is below weight limit of 5,000 kg (51,0 % Weight slack)
 ```

@@ -58,7 +58,6 @@ public
     c5 : port IrrigationScheduleIn -> IrrigationCtrl.IrrigationSchedule;
     c6 : port ZoneConfigIn -> IrrigationCtrl.ZoneConfig;
     c7 : port IrrigationCtrl.ValveControl -> ValveControlOut;
-    c8 : port TriggerImageOut -> Camera.TriggerImage;
   end ControlProcess.impl;
   
   process NotificationProcess
