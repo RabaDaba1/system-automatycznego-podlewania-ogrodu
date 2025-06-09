@@ -1,4 +1,5 @@
 # System automatycznego podlewania ogrodu
+
 ## Autor
 Kacper Rabczewski
 
@@ -25,6 +26,7 @@ System automatycznego podlewania ogrodu to system czasu rzeczywistego zaprojekto
 - `CommandData` – komendy przesyłane z aplikacji użytkownika.
 - `IrrigationScheduleData` – dane harmonogramu podlewania.
 - `ZoneConfigData` – konfiguracja stref podlewania.
+
 
 ### Wątki
 - `MoistureSensorMonitor` – wątek monitorujący odczyty czujników wilgotności gleby.
