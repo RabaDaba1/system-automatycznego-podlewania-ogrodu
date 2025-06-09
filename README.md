@@ -76,3 +76,40 @@ System implementuje następujące przepływy danych:
 - Prognoza pogody -> Adjustacja harmonogramu podlewania
 - Stan zbiornika -> Powiadomienia dla użytkownika
 - Harmonogram -> Wykonanie podlewania -> Dokumentacja fotograficzna
+
+## Analiza Scheduling
+
+Analiza schedulingu została przeprowadzona w celu weryfikacji, czy system jest w stanie wykonać wszystkie zadania w zdefiniowanych ramach czasowych na docelowym procesorze.
+
+### Podsumowanie wyników
+
+Procesor `MainCPU` jest schedulowalny z wykorzystaniem na poziomie 0.4%. Wszystkie zdefiniowane wątki w systemie są schedulowalne, co oznacza, że ich maksymalne czasy odpowiedzi nie przekraczają zdefiniowanych deadline'ów.
+
+### Szczegółowy raport
+
+```
+Test scheduability Report
+
+Processor Utilization/Scheduling Results
+Schedulability Results
+MainCPU: Processor GardenIrrigation_impl_Instance.MainCPU is schedulable with utilization 0.4%
+thread name, period, deadline, execution time, phase offset, priority, max response time, schedulability 
+GardenIrrigation_impl_Instance.SensorsProc.MoistureSensor, 60000000, 50000000, 50000, 0, 7, 50000.0, true
+GardenIrrigation_impl_Instance.ControlProc.IrrigationCtrl, 60000000, 50000000, 200000, 0, 6, 250000.0, true
+GardenIrrigation_impl_Instance.NotificationProc.NotifyManager, 60000000, 30000000, 100000, 0, 5, 350000.0, true
+GardenIrrigation_impl_Instance.SensorsProc.TankMonitor, 300000000, 200000000, 50000, 0, 4, 400000.0, true
+GardenIrrigation_impl_Instance.SensorsProc.WeatherData, 2147483647, 2147483647, 500000, 0, 3, 900000.0, true
+GardenIrrigation_impl_Instance.ControlProc.Camera, 2147483647, 1000000000, 2000000, 0, 2, 2000000.0, true
+GardenIrrigation_impl_Instance.NotificationProc.CameraCtrl, 2147483647, 1000000000, 2000000, 0, 1, 2000000.0, true
+
+
+
+Thread binding report
+thread SensorsProc.MoistureSensor(0,001 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,1%
+thread SensorsProc.WeatherData(0,000 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,0%
+thread SensorsProc.TankMonitor(0,000 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,0%
+thread ControlProc.IrrigationCtrl(0,003 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,3%
+thread ControlProc.Camera(0,001 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,1%
+thread NotificationProc.NotifyManager(0,002 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,2%
+thread NotificationProc.CameraCtrl(0,001 MIPS) ==> processor MainCPU(1,00MIPS) Utilization 0,1%
+```
